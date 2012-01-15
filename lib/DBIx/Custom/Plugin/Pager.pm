@@ -32,6 +32,9 @@ no strict 'refs';
     my $sql = 'select ';
     
     # Prefix
+    if( !$opt{prefix} || !( $opt{prefix} eq 'SQL_CALC_FOUND_ROWS' ) ) {
+        $opt{prefix}  = 'SQL_CALC_FOUND_ROWS'; 
+    }
     $sql .= "$opt{prefix} " if defined $opt{prefix};
     
     # Column
@@ -102,9 +105,6 @@ no strict 'refs';
         my $offset    = ($opt{page} - 1) * $opt{rows};
         $opt{append} .= " LIMIT  @{[$offset]}, @{[$opt{rows}]} ";               
 
-        if( !$opt{prefix} || !( $opt{prefix} eq 'SQL_CALC_FOUND_ROWS' ) ) {
-            $opt{prefix}  = 'SQL_CALC_FOUND_ROWS'; 
-        }
     }
 
     # Execute query
